@@ -1,2 +1,3 @@
-# node-love-checker
-# vk-love-checker
+# vk-eulers
+
+python script, that analyze vk eulers and crawl data.
