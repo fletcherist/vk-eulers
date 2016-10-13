@@ -30,13 +30,12 @@ count = photos_request['count']
 # photo_id = photos[0]['id']
 photo = photos[0]
 
-
 likers = {}
 def get_likes (owner_id, item_id):
 	likes = vk.likes.getList(
 		type = 'photo',
 		owner_id = owner_id,
-		item_id = item_id,
+		item_id = item_id
 	)
 	print ('found %s likes' % likes['count'])
 	return likes['items']
@@ -48,13 +47,9 @@ def analyze_likes (likes):
 		else:
 			likers[like] = likers[like] + 1	
 
-
 likes = get_likes(photo['owner_id'], photo['id'])
 analyze_likes(likes)
 pprint.pprint(likers)
-
-
-
 
 # for photo in photos:
 # 	print(photo['id'])
