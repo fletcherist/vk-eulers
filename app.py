@@ -2,6 +2,7 @@ import vk_api
 from config import login, password, target_id
 import pprint
 import time
+from math import ceil 
 
 vk_session = vk_api.VkApi(login, password)
 
@@ -62,7 +63,8 @@ def print_all_this_shit(sorted_likers):
 		maxlikers = len(sorted_likers) - 1 - qwerty
 		user_id = sorted_likers[maxlikers][0]
 		count = sorted_likers[maxlikers][1]
-		print('id%s - %s' %(user_id, count))
+		percent  = ceil(count / (len(photos) / 100))
+		print('id%s - shows interest of equal  %s percent' %(user_id, percent))
 
 
 
