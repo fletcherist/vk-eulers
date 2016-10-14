@@ -56,13 +56,22 @@ def sort_likers():
 	]
 	return sorted_likers
 
+def print_all_this_shit(sorted_likers):
+	for i in range(0, 5):
+		qwerty = 5 - i
+		maxlikers = len(sorted_likers) - 1 - qwerty
+		user_id = sorted_likers[maxlikers][0]
+		count = sorted_likers[maxlikers][1]
+		print('id%s - %s' %(user_id, count))
+
+
 
 for index, photo in enumerate(photos):
 	print('Analyzing photo %s of %s' % (index, len(photos)))
 	likes = get_likes(photo['owner_id'], photo['id'])
 	analyze_likes(likes)
 	sorted_likers = sort_likers()
-	pprint.pprint(sorted_likers)
+	print_all_this_shit(sorted_likers)
 
 	# to avoid too many requests
 	# need a small latency between them
