@@ -13,8 +13,17 @@ except vk_api.AuthorizationError as error_msg:
 
 vk = vk_session.get_api()
 
-response = vk.users.get(user_id = target_id)
-print('Analyzing: %s' % response[0]['first_name'] + ' ' + response[0]['last_name'])
+
+
+def get_user(target_id):
+	response = vk.users.get(user_id = target_id)
+	user = response[0]
+	return user
+
+def print_user(user):
+	print_string = 'Analyzing: %s' % user['first_name'] + ' ' + user['last_name']
+	print(print_string)
+	print('-' * len(print_string))
 
 def get_photos(target_id):
 	photos_request = vk.photos.getAll(
@@ -22,18 +31,10 @@ def get_photos(target_id):
 		photo_sizes = 0,
 		count = 200
 	)
-	Asdfgg = dict()
-	Asdfgg['photos'] = photos_request['items']
-	Asdfgg['count'] = photos_request['count']
-	return Asdfgg
-
-user_photos = get_photos(target_id)
-photos = user_photos['photos']
-count = user_photos['count']
-
-
-likers = {}
-sorted_likers = {}
+	return {
+		'photos': photos_request['items'],
+		'count': photos_request['count']
+	}
 
 def get_friends():
 	response = vk.friends.get(user_id = target_id)
@@ -67,8 +68,10 @@ def sort_likers():
 
 def print_all_this_shit(sorted_likers):
 	for i in range(0, 5):
-		qwerty = 5 - i
-		maxlikers = len(sorted_likers) - 1 - qwerty
+		# the last element
+		# + range counter
+		range_counter = 5 - i
+		maxlikers = len(sorted_likers) - 1 - range_counter
 		if maxlikers < 6:
 			break
 		user_id = sorted_likers[maxlikers][0]
@@ -77,6 +80,16 @@ def print_all_this_shit(sorted_likers):
 		print('id%s - shows interest of equal  %s percent' %(user_id, percent))
 
 
+
+user = get_user(target_id)
+print_user(user)
+
+user_photos = get_photos(target_id)
+photos = user_photos['photos']
+count = user_photos['count']
+
+likers = {}
+sorted_likers = {}
 
 for index, photo in enumerate(photos):
 	print('Analyzing photo %s of %s' % (index, len(photos)))
