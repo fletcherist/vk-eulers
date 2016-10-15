@@ -61,6 +61,8 @@ def print_all_this_shit(sorted_likers):
 	for i in range(0, 5):
 		qwerty = 5 - i
 		maxlikers = len(sorted_likers) - 1 - qwerty
+		if maxlikers < 6:
+			break
 		user_id = sorted_likers[maxlikers][0]
 		count = sorted_likers[maxlikers][1]
 		percent  = ceil(count / (len(photos) / 100))
