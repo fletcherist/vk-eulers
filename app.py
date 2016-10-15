@@ -13,8 +13,6 @@ except vk_api.AuthorizationError as error_msg:
 
 vk = vk_session.get_api()
 
-
-
 def get_user(target_id):
 	response = vk.users.get(user_id = target_id)
 	user = response[0]
@@ -134,7 +132,6 @@ def get_likers(likers, limit_value):
 		# photos = user_photos['photos']
 		# analyze_photos(photos)
 		# time.sleep(.5)
-
 
 user = get_user(target_id)
 print_user(user)
