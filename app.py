@@ -97,9 +97,9 @@ def analyze_photos(photos):
 		print_top_5(sorted_likers)
 
 		# DEBUG
-		print(len(sorted_likers))
-		if len(sorted_likers) > 60:
-			break
+		# print(len(sorted_likers))
+		# if len(sorted_likers) > 60:
+			# break
 
 		# to avoid too many requests
 		# need a small latency between them
