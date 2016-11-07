@@ -4,6 +4,8 @@ import pprint
 import time
 from math import ceil 
 
+import db
+
 vk_session = vk_api.VkApi(login, password)
 
 try:
@@ -16,6 +18,12 @@ vk = vk_session.get_api()
 def get_user(target_id):
 	response = vk.users.get(user_id = target_id)
 	user = response[0]
+	print(user)
+	db.add_user(
+		name = user['first_name'],
+		surname = user['last_name'],
+		vkID = user['id']
+	)
 	return user
 
 def print_user(user, count=0):
@@ -58,6 +66,10 @@ def get_likes(owner_id, item_id):
 
 def analyze_likes(likes):
 	for like in likes:
+		db.add_like_on_photo(
+			userVKID = like,
+			targetVKID = target_id
+		)
 		if (like not in likers):
 			likers[like] = 1
 		else:
@@ -94,17 +106,19 @@ def analyze_photos(photos):
 		likes = get_likes(photo['owner_id'], photo['id'])
 		analyze_likes(likes)
 		sorted_likers = sort_likers()
-		print_top_5(sorted_likers)
+		# print_top_5(sorted_likers)
 
-		# DEBUG
+		# # DEBUG
 		# print(len(sorted_likers))
 		# if len(sorted_likers) > 60:
-			# break
+		# 	db.set_is_finished_photos(target_id, True)
+		# 	break
 
 		# to avoid too many requests
 		# need a small latency between them
 		time.sleep(.3)
 	# pprint.pprint(sorted_likers)
+	db.set_is_finished_photos(target_id, True)
 	limit_value = a_cup_of_tea(sorted_likers)
 	get_likers(sorted_likers, limit_value)
 
